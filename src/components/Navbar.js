@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-function Navbar() {
+function Navbar({student, alumni}) {
   return (
     <AppBar position="static" style={{ background: '#2196f3' }}>
       <Toolbar>
@@ -22,9 +22,9 @@ function Navbar() {
           <Button component={Link} to='/application' color='inherit'>
           Application
         </Button>
-          <Button component={Link} to="/favorite-jobs" color="inherit">
+         {student && <Button component={Link} to="/favorite-jobs" color="inherit">
             Favorite Jobs
-          </Button>
+          </Button>}
           <Button component={Link} to="/profile" color="inherit">
             User Profile
           </Button>

@@ -90,7 +90,6 @@ function JobDetail({ token, alumni, student }) {
   // Define the paths for the Link components
   const jobPostsPath = "/job-posts";
   const applicationPath = `/application/${jobId}`;
-  console.log('e', Error)
   return (
     <div>
       <Typography variant="h5">

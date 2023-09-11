@@ -32,6 +32,26 @@ function FavoriteJobView({ token }) {
   const navigate = useNavigate();
   let autoIncreasingId = 1;
 
+  async function removeJobFromFavorites(jobId){
+    try{
+      const response = await fetch(`http://127.0.0.1:8000/job/api/favorite_jobs/${jobId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Token ${token}` },
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        setErrMsg(data.error);
+      } else {
+        const data = await response.json();
+        // Remove the job from the list of favoriteJobs in the state
+        console.log(data);
+        setfavoriteJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
+      }
+    } catch (error) {
+      console.error("Error removing job from favorites:", error);
+    }
+  }
+
   return (
     <>
       <h1>Favorite Jobs</h1>
@@ -40,11 +60,22 @@ function FavoriteJobView({ token }) {
         <Card key={autoIncreasingId++}>
           <Typography>Favorite Job: {autoIncreasingId}</Typography>
           <Button
+            variant='contained'
             onClick={() => {
               navigate(`/job-posts/${fav_job.job_id}`);
             }}
           >
             Job Post {fav_job.job_id}
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              removeJobFromFavorites(fav_job.id);
+            }}
+          >
+            Remove from Favorite
           </Button>
         </Card>
       ))}

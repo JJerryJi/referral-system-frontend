@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import JobCard from './JobCard'; // You can create this component for rendering individual job posts
-import { Box, Typography, Button } from '@mui/material';
-import Unauthorized from './Unauthorized';
+import React, { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
+import JobCard from "../components/JobCard"; // You can create this component for rendering individual job posts
+import { Box, Typography, Button } from "@mui/material";
+import Unauthorized from "./UnauthorizedPage";
 
 function JobPosts({ token }) {
   const [authView, setAuthView] = useState(false); // Set initial value to true for authorized view
@@ -10,14 +10,14 @@ function JobPosts({ token }) {
   const [isLoading, setIsLoading] = useState(true);
 
   // Mock API endpoint for job posts data
-  const mockApiEndpoint = 'http://127.0.0.1:8000/job/api/posts';
+  const mockApiEndpoint = "http://127.0.0.1:8000/job/api/posts";
   const authToken = `Token ${token}`; // Your authorization token
 
   useEffect(() => {
     async function fetchJobPosts() {
       try {
         const response = await fetch(mockApiEndpoint, {
-          method: 'GET',
+          method: "GET",
           headers: {
             Authorization: authToken,
           },
@@ -34,7 +34,7 @@ function JobPosts({ token }) {
         setJobPosts(data.job_post);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching job posts:', error);
+        console.error("Error fetching job posts:", error);
         setIsLoading(false);
       }
     }
@@ -47,10 +47,19 @@ function JobPosts({ token }) {
   }
 
   // Filter job posts where job_review_status is 'Pass'
-  const filteredJobPosts = jobPosts.filter((jobPost) => jobPost.job_review_status === 'Pass');
+  const filteredJobPosts = jobPosts.filter(
+    (jobPost) => jobPost.job_review_status === "Pass"
+  );
 
   return authView ? (
-    <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "center",
+      }}
+    >
       {filteredJobPosts.map((jobPost) => (
         <JobCard
           key={jobPost.job_id} // You should provide a unique key for each JobCard

@@ -54,6 +54,14 @@ function DetailedApplicationView({ application }) {
         >
           Link to Job Post
         </Button>
+        <Button 
+        variant='contained'
+        onClick={() => {
+          // Pass in application.id 
+            navigate(`/change-application/${application.id}`);
+          }}>
+          Modify this Application
+        </Button>
       </CardContent>
     </Card>
   );

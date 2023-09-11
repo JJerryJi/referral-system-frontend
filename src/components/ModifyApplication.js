@@ -23,11 +23,13 @@ function ApplicationForm({token}) {
           const data = await response.json();
         //   console.log("Data received from backend:", data);
 
-          // populate the field iwth 
+          // populate the field with 
           setLinkedIn(data.application.linkedIn);
           setAnswer(data.application.answer);
           setResumeFile(data.application.resume_path)
         } else {
+          const data = await response.json();
+          console.log(data)
           setErrorText("Error fetching application data");
         }
       } catch (error) {

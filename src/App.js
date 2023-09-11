@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Container from "@mui/material/Container";
 import UserProfile from "./components/UserProfile";
-import JobPosts from "./components/JobPosts";
-import JobDetail from "./components/JobDetail";
-import SignInForm from "./components/SignInForm";
+import JobPosts from "./pages/JobPostsPage";
+import JobDetail from "./pages/JobDetailPage";
+import SignInForm from "./pages/SignInPage";
 import Cookies from "universal-cookie";
 import { useState } from "react";
 import SubmitApplication from "./components/SubmitApplication";
 import ApplicationView from "./components/StudentApplicationView";
 import ModifyApplication from "./components/ModifyApplication";
-import FavoriteJobView from "./components/FavoriteJob";
+import FavoriteJobView from "./pages/FavoriteJobPage";
 function App() {
   const cookies = new Cookies();
   const [authToken, setAuthToken] = useState(cookies.get("authToken")); // Use state to track authToken
@@ -81,7 +81,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Navbar />
+        <Navbar student={student} alumni={alumni}/>
         <Container maxWidth="lg">
           <Routes>
             <Route
