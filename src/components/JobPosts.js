@@ -22,7 +22,7 @@ function JobPosts({ token }) {
             Authorization: authToken,
           },
         });
-        console.log(response);
+        // console.log(response);
 
         if (!response.ok) {
           setIsLoading(false);

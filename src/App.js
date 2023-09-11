@@ -8,15 +8,15 @@ import JobDetail from "./components/JobDetail";
 import SignInForm from "./components/SignInForm";
 import Cookies from "universal-cookie";
 import { useState } from "react";
-import SubmitApplication from './components/SubmitApplication'
+import SubmitApplication from "./components/SubmitApplication";
 import ApplicationView from "./components/StudentApplicationView";
-import ModifyApplication from './components/ModifyApplication'
-import FavoriteJobView from './components/FavoriteJob'
+import ModifyApplication from "./components/ModifyApplication";
+import FavoriteJobView from "./components/FavoriteJob";
 function App() {
   const cookies = new Cookies();
-  const [authToken, setAuthToken] = useState(cookies.get('authToken')); // Use state to track authToken
-  const [student, setStudent] = useState(null)
-  const [alumni, setAlumni] = useState(null)
+  const [authToken, setAuthToken] = useState(cookies.get("authToken")); // Use state to track authToken
+  const [student, setStudent] = useState(null);
+  const [alumni, setAlumni] = useState(null);
 
   // Callback function to update authToken when a user signs in
   const handleSignIn = (newAuthToken) => {
@@ -54,20 +54,18 @@ function App() {
 
           const studentData = await studentResponse.json();
           setStudent(studentData.student);
-
-        } else if (tokenData.alumni_id){
+          console.log(studentData);
+        } else if (tokenData.alumni_id) {
           const AlumniResponse = await fetch(
             `http://127.0.0.1:8000/user/api/alumni/${tokenData.alumni_id}`
           );
-          if (!AlumniResponse.ok){
-            throw new Error('Network response for alumni data was not ok');
+          if (!AlumniResponse.ok) {
+            throw new Error("Network response for alumni data was not ok");
           }
-          const alumniData = await AlumniResponse.json()
+          const alumniData = await AlumniResponse.json();
           setAlumni(alumniData.alumni);
-          console.log(alumniData)
-        }
-        
-        else {
+          console.log(alumniData);
+        } else {
           console.error(
             "Student ID not found in the token verification response"
           );
@@ -80,21 +78,54 @@ function App() {
     getStudentOrAlumniId();
   }, [authToken]);
 
-
   return (
     <Router>
       <div>
         <Navbar />
         <Container maxWidth="lg">
           <Routes>
-            <Route path="/profile" element={<UserProfile token={authToken} alumni={alumni} student={student} />} />
+            <Route
+              path="/profile"
+              element={
+                <UserProfile
+                  token={authToken}
+                  alumni={alumni}
+                  student={student}
+                />
+              }
+            />
             <Route path="/job-posts" element={<JobPosts token={authToken} />} />
-            <Route path="/job-posts/:jobId" element={<JobDetail token={authToken} />} />
-            <Route path="/application/:jobId" element={<SubmitApplication token={authToken} />} />
-            <Route path="/application" element={<ApplicationView token={authToken} />} />
-            <Route path='/change-application/:applicationId' element={<ModifyApplication token={authToken}/>}></Route>
-            <Route path='/favorite-jobs' element={<FavoriteJobView token={authToken}/>}></Route>
-            <Route path="/sign-in" element={<SignInForm onSignIn={handleSignIn} />} />  {/* call back function  */}
+            <Route
+              path="/job-posts/:jobId"
+              element={
+                <JobDetail
+                  token={authToken}
+                  alumni={alumni}
+                  student={student}
+                />
+              }
+            />
+            <Route
+              path="/application/:jobId"
+              element={<SubmitApplication token={authToken} />}
+            />
+            <Route
+              path="/application"
+              element={<ApplicationView token={authToken} />}
+            />
+            <Route
+              path="/change-application/:applicationId"
+              element={<ModifyApplication token={authToken} />}
+            ></Route>
+            <Route
+              path="/favorite-jobs"
+              element={<FavoriteJobView token={authToken} />}
+            ></Route>
+            <Route
+              path="/sign-in"
+              element={<SignInForm onSignIn={handleSignIn} />}
+            />{" "}
+            {/* call back function  */}
           </Routes>
         </Container>
       </div>
@@ -102,4 +133,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

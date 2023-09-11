@@ -47,3 +47,5 @@ Thumbs.db
 *.lock
 *.sqlite
 *.sqlite3
+
+package-lock.json

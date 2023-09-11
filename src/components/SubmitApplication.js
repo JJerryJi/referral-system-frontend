@@ -30,7 +30,7 @@ function SubmitApplication({ token }) {
       formData.append("job_id", jobId);
       formData.append("linkedIn", linkedIn);
       formData.append("answer", answer);
-      console.log(authToken)
+      // console.log(authToken)
       const response = await fetch(ApplicationApiEndpoint, {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ function SubmitApplication({ token }) {
 
       if (response.ok) {
         setSubmitStatus(true);
-        console.log('Submission success!');
+        // console.log('Submission success!');
       } else {
         // Handle the error response and extract the error message
         const responseData = await response.json();
