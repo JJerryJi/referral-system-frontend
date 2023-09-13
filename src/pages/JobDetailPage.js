@@ -41,6 +41,7 @@ function JobDetail({ token, alumni, student }) {
     fetchJobDetail();
   }, [authToken, mockApiEndpoint]);
 
+  
   if (isLoading) {
     return <CircularProgress />;
   }
