@@ -9,9 +9,10 @@ import SignInForm from "./pages/SignInPage";
 import Cookies from "universal-cookie";
 import { useState } from "react";
 import SubmitApplication from "./components/SubmitApplication";
-import ApplicationView from "./components/StudentApplicationView";
+import StudentApplicationView from "./pages/StudentApplicationViewPage";
 import ModifyApplication from "./components/ModifyApplication";
 import FavoriteJobView from "./pages/FavoriteJobPage";
+import JobPostModification from './components/ModifyJobPost'
 function App() {
   const cookies = new Cookies();
   const [authToken, setAuthToken] = useState(cookies.get("authToken")); // Use state to track authToken
@@ -81,7 +82,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Navbar student={student} alumni={alumni}/>
+        <Navbar student={student} alumni={alumni} />
         <Container maxWidth="lg">
           <Routes>
             <Route
@@ -105,13 +106,15 @@ function App() {
                 />
               }
             />
-            <Route
-              path="/application/:jobId"
-              element={<SubmitApplication token={authToken} />}
-            />
+            {student && (
+              <Route
+                path="/application/:jobId"
+                element={<SubmitApplication token={authToken} />}
+              />
+            )}
             <Route
               path="/application"
-              element={<ApplicationView token={authToken} />}
+              element={<StudentApplicationView token={authToken} />}
             />
             <Route
               path="/change-application/:applicationId"
@@ -121,6 +124,8 @@ function App() {
               path="/favorite-jobs"
               element={<FavoriteJobView token={authToken} />}
             ></Route>
+            <Route path="/edit-job-posts/:jobId" element={<JobPostModification token={authToken} />}> 
+            </Route>
             <Route
               path="/sign-in"
               element={<SignInForm onSignIn={handleSignIn} />}
